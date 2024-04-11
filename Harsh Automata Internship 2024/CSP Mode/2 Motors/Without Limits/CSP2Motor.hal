@@ -1,0 +1,54 @@
+loadrt trivkins
+loadrt threads name1=servo-thread period1=1000000
+loadrt limit3 count=2
+#loadusr -Wn pacmac_ui pyvcp -c pacmac_ui vcp.xml
+#loadusr -W lcec_conf pacmac_ecat.xml
+loadusr -W lcec_conf CSP2Motor.xml
+loadrt lcec
+
+# loadusr -W mbslave mbslave-conf.xml
+
+addf lcec.read-all 		servo-thread
+addf lcec.write-all 	servo-thread
+addf limit3.0 			servo-thread
+addf limit3.1 			servo-thread
+
+setp lcec.0.0.opmode-3 1
+setp lcec.0.1.opmode-3 1
+
+setp lcec.0.0.maxrpm 50000
+setp lcec.0.1.maxrpm 50000
+
+# net m0_position lcec.0.0.actpos
+
+# net cmd-vel-0	lcec.0.0.velcmd
+# net m0_vel 		lcec.0.0.actvel
+
+net drv_en_0	lcec.0.0.drivecontrol-0
+net drv_en_0	lcec.0.0.drivecontrol-3
+
+net drv_en_1	lcec.0.1.drivecontrol-0
+net drv_en_1	lcec.0.1.drivecontrol-3
+
+# net drv_en_1	lcec.0.1.drivecontrol-0
+# net drv_en_1	lcec.0.1.drivecontrol-3
+#               lcec master_no.slave_no
+
+setp lcec.0.0.drivecontrol-1 1
+setp lcec.0.0.drivecontrol-2 1
+
+setp lcec.0.1.drivecontrol-1 1
+setp lcec.0.1.drivecontrol-2 1
+
+# net m0_torque 	lcec.0.0.acttorque
+net reset_all_0 lcec.0.0.drivecontrol-7
+net reset_all_1 lcec.0.1.drivecontrol-7
+
+setp limit3.0.maxv 5000
+setp limit3.1.maxv 5000
+
+net pos_0 limit3.0.out lcec.0.0.poscmd 
+net pos_1 limit3.1.out lcec.0.1.poscmd 
+
+
+start

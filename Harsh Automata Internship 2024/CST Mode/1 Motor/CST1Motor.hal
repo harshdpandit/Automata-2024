@@ -1,0 +1,37 @@
+loadrt trivkins
+loadrt threads name1=servo-thread period1=1000000
+
+#loadusr -Wn pacmac_ui pyvcp -c pacmac_ui vcp.xml
+#loadusr -W lcec_conf pacmac_ecat.xml
+loadusr -W lcec_conf CST1Motor.xml
+loadrt lcec
+
+# loadusr -W mbslave mbslave-conf.xml
+
+addf lcec.read-all 		servo-thread
+addf lcec.write-all 	servo-thread
+
+setp lcec.0.0.opmode-1 1
+setp lcec.0.0.opmode-3 1
+
+setp lcec.0.0.torqcmd 0
+
+# net m0_position lcec.0.0.actpos
+
+# net cmd-vel-0	lcec.0.0.velcmd
+# net m0_vel 		lcec.0.0.actvel
+
+net drv_en_0	lcec.0.0.drivecontrol-0
+net drv_en_0	lcec.0.0.drivecontrol-3
+
+# net drv_en_1	lcec.0.1.drivecontrol-0
+# net drv_en_1	lcec.0.1.drivecontrol-3
+#               lcec master_no.slave_no
+
+setp lcec.0.0.drivecontrol-1 1
+setp lcec.0.0.drivecontrol-2 1
+
+# net m0_torque 	lcec.0.0.acttorque
+net reset_all lcec.0.0.drivecontrol-7
+
+start

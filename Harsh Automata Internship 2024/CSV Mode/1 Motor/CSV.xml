@@ -1,0 +1,32 @@
+<masters>
+<master idx="0" appTimePeriod="1000000" refClockSyncCycles="5">
+   	<slave idx="0" type="generic" vid="5a65726f" pid="00029252" configPdos="true">
+		<syncManager idx="0" dir="out">
+		</syncManager>
+		<syncManager idx="1" dir="in">
+		</syncManager>
+		<syncManager idx="2" dir="out">
+		  	<pdo idx="1600">
+		    	<pdoEntry idx="6040" subIdx="00" bitLen="16" halPin="drivecontrol" halType="bit"/>
+				<pdoEntry idx="6060" subIdx="00" bitLen="8" halPin="opmode" halType="bit"/>
+		    	<pdoEntry idx="60FF" subIdx="00" bitLen="32" halPin="velcmd" halType="float" scale="1"/>
+		    	<pdoEntry idx="6080" subIdx="00" bitLen="32" halPin="maxrpm" halType="float" scale="1"/>
+			</pdo>
+		</syncManager>
+		
+		<syncManager idx="3" dir="in">
+		  	<pdo idx="1A00">
+				<pdoEntry idx="603f" subIdx="00" bitLen="16" halPin="errorstatus" halType="bit"/>
+		   		<pdoEntry idx="6041" subIdx="00" bitLen="16" halPin="drivestatus" halType="bit"/>
+				<pdoEntry idx="6061" subIdx="00" bitLen="8" halPin="opmode_fb" halType="bit"/>
+	    		<pdoEntry idx="6064" subIdx="00" bitLen="32" halPin="actpos" halType="float" scale="1"/>
+	    		<pdoEntry idx="606C" subIdx="00" bitLen="32" halPin="actvel" halType="float" scale="1"/>
+				<pdoEntry idx="6077" subIdx="00" bitLen="16" halPin="acttorque" halType="float" scale="1"/>
+		    	<pdoEntry idx="60FD" subIdx="00" bitLen="32" halPin="digital_inputs" halType="bit"/>
+		  	</pdo>
+		</syncManager>
+		
+		<dcConf assignActivate="300" sync0Cycle="*1" sync0Shift="0"/>
+	</slave>
+</master>
+</masters>
